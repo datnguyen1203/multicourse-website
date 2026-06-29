@@ -1,6 +1,15 @@
 const CourseService = require('../services/courseService');
 
 const courseController = {
+    //get top 3 courses
+    async getTop3Courses(req, res) {
+        try {
+            const courses = await CourseService.getTop3Courses();
+            res.status(200).json(courses);
+        } catch (error) {
+            res.status(500).json({ error: 'Failed to fetch active courses' });
+        }
+    },
 
     //get active courses
     async getActiveCourses(req, res) {

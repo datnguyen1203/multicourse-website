@@ -3,6 +3,17 @@ const Courses = require('../models/Courses');
 
 module.exports = {
 
+    //Get top 3 active courses
+    async getTop3Courses() {
+        try {
+            const courses = await Courses.find({ status: true })
+                .limit(3);
+            return courses;
+        } catch (error) {
+            throw new Error('Error fetching courses: ' + error.message);
+        }
+    },
+
     // Get all active courses
     async getAllActiveCourses() {
         try {

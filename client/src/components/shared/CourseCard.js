@@ -1,36 +1,45 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { Card, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
 
 export default function CourseCard({ course }) {
-    const { id, title, teacher, price, thumbnail, category } = course;
+    // Map đúng các trường từ API của bạn (_id, title, price, image)
+    const { _id, title, price, image, category } = course;
+
     return (
-        // relative aspect-video w-full overflow-hidden bg-slate-100
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+            {/* Thumbnail */}
             <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                <img src={thumbnail}
+                <img
+                    src={image || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500"} // Có ảnh fallback nếu lỗi
                     alt={title}
-                    className="object-cover w-full h-full hover:scale-105 transition-transform duration-300" />
-                {category && (
-                    <span className="absolute top-3 left-3 bg-white/90 text-green-700 text-xs font-semibold px-2.5 py-1 rounded shadow-sm backdrop-blur-sm">{category}</span>
+                    className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+                />
+                {/* Nếu category là một Object chứa tên danh mục, hãy dùng category.name, còn nếu là ID tạm thời để trống hoặc ẩn đi */}
+                {category && typeof category === "object" && (
+                    <span className="absolute top-3 left-3 bg-white/90 text-green-700 text-xs font-semibold px-2.5 py-1 rounded shadow-sm backdrop-blur-sm">
+                        {category.name}
+                    </span>
                 )}
             </div>
+
+            {/* Nội dung Card */}
             <CardHeader className="p-4 pb-2 flex-1">
                 <CardTitle className="text-base font-bold line-clamp-2 hover:text-green-600 transition-colors">
-                    <Link href="/">{title}</Link>
+                    <Link href={`/courses/${_id}`}>{title}</Link>
                 </CardTitle>
-                <p className="text-xs text-gray-400 mt-1">
-                    Teacher: <span className="font-medium text-gray-600">{teacher}</span>
-                </p>
+                <p className="text-xs text-gray-400 mt-1">MultiCourse Academy</p>
             </CardHeader>
+
+            {/* Phần chân Card */}
             <CardFooter className="p-4 pt-0 flex items-center justify-between border-t mt-4 bg-slate-50/50">
                 <span className="text-base font-bold text-gray-900">
-                    {price === 0 ? "Free" : `${price.toLocaleString("vi-VN")} VND`}
+                    {price === 0 ? "Miễn phí" : `${price.toLocaleString("vi-VN")} đ`}
                 </span>
                 <Button size="sm" variant="ghost" className="text-green-600 hover:text-green-700 p-0 font-medium cursor-pointer" asChild>
-                    <Link href="/">View detail →</Link>
+                    <Link href={`/courses/${_id}`}>Xem chi tiết →</Link>
                 </Button>
             </CardFooter>
         </Card>
-    )
+    );
 }

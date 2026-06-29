@@ -1,37 +1,32 @@
+"use client"
 import CourseCard from "@/components/shared/CourseCard";
 import { Button } from "@/components/ui/button";
+import { courseService } from "@/services/courseService";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Giả lập danh sách khóa học lấy từ Backend về để map ra giao diện
-  const featuredCourses = [
-    {
-      id: 1,
-      title: "Lập Trình Web Full-Stack Với React & Node.js",
-      teacher: "Nguyễn Văn A",
-      price: 499000,
-      thumbnail: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&auto=format&fit=crop&q=60",
-      category: "Công nghệ thông tin"
-    },
-    {
-      id: 2,
-      title: "Thiết Kế Đồ Họa Căn Bản Đến Nâng Cao Với Canva",
-      teacher: "Trần Thị B",
-      price: 299000,
-      thumbnail: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500&auto=format&fit=crop&q=60",
-      category: "Thiết kế"
-    },
-    {
-      id: 3,
-      title: "Tiếng Anh Giao Tiếp Thực Chiến Cho Người Đi Làm",
-      teacher: "Michael Smith",
-      price: 599000,
-      thumbnail: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=500&auto=format&fit=crop&q=60",
-      category: "Ngoại ngữ"
-    }
-  ];
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await courseService.getTop3Courses();
+        // Lấy đúng 3 khóa học tiêu biểu đầu tiên từ mảng API trả về
+        if (Array.isArray(data)) {
+          setCourses(data.slice(0, 3));
+        }
+      } catch (error) {
+        console.error("Không thể tải khóa học:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   return (
     <div className="space-y-16 pb-16">
@@ -68,8 +63,8 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+          {courses.map((course) => (
+            <CourseCard key={course._id} course={course} />
           ))}
         </div>
       </section>
