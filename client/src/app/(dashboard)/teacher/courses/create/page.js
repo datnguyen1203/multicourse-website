@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Upload, Loader2 } from "lucide-react";
 import Link from "next/link";
+import ImageCropperModal from "@/components/shared/ImageCropperModal";
 
 export default function CreateCoursePage() {
     const router = useRouter();
@@ -27,14 +28,28 @@ export default function CreateCoursePage() {
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState("");
 
+    //Cắt ảnh
+    const [cropperOpen, setCropperOpen] = useState(false);
+    const [rawImageSrc, setRawImageSrc] = useState("");
+
     // Xử lý khi chọn file ảnh để hiển thị Preview
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setImageFile(file);
-            const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                setRawImageSrc(reader.result); // Lưu chuỗi base64 của ảnh gốc
+                setCropperOpen(true);          // Mở modal cắt ảnh lên
+            });
+            reader.readAsDataURL(file);
+            e.target.value = null; // Reset input để có thể chọn lại chính file đó nếu muốn
         }
+    };
+
+    // Hàm nhận kết quả sau khi đã cắt thành công từ Modal
+    const handleCropComplete = (croppedFile, previewUrl) => {
+        setImageFile(croppedFile);   // File đã cắt chuẩn kích thước/tỉ lệ để gửi API
+        setImagePreview(previewUrl); // Link preview ảnh đã cắt để hiện lên UI
     };
 
     const handleSubmit = async (e) => {
@@ -67,7 +82,7 @@ export default function CreateCoursePage() {
 
             // Chuyển hướng sang trang tạo bài học cho khóa học này
             if (courseId) {
-                router.push(`/teacher/courses/${courseId}/lessons`);
+                router.push(`/teacher/courses/${courseId}/`);
             } else {
                 // Fallback nếu không tìm thấy id trong phản hồi
                 router.push("/teacher/courses");
@@ -213,7 +228,7 @@ export default function CreateCoursePage() {
                         </div>
 
                         {/* Nút gửi form */}
-                        <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 mt-4" disabled={isSubmitting}>
+                        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 mt-4" disabled={isSubmitting}>
                             {isSubmitting ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -226,6 +241,12 @@ export default function CreateCoursePage() {
                     </form>
                 </CardContent>
             </Card>
+            <ImageCropperModal
+                open={cropperOpen}
+                setOpen={setCropperOpen}
+                imageSrc={rawImageSrc}
+                onCropComplete={handleCropComplete}
+            />
         </div>
     );
 }
