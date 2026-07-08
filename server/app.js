@@ -4,6 +4,7 @@ const authRouter = require('./routes/authRouter');
 const userRouter = require('./routes/userRouter');
 const courseRouter = require('./routes/courseRouter');
 const lessonRouter = require('./routes/lessonRouter');
+const categoryRouter = require('./routes/categoryRouter');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/lessons', lessonRouter);
+app.use('/api/categories', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

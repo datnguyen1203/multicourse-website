@@ -27,7 +27,7 @@ export default function Header() {
                 </Link>
                 {/* Dieu huong chinh */}
                 <nav className="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600">
-                    <Link href="/" className="hover:text-green-600 transition-colors">Courses</Link>
+                    <Link href={dashboardHref} className="hover:text-green-600 transition-colors">Dashboard</Link>
                     <Link href="/" className="hover:text-green-600 transition-colors">About us</Link>
                     <Link href="/" className="hover:text-green-600 transition-colors">Contact</Link>
                 </nav>

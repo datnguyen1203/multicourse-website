@@ -7,6 +7,16 @@ import api from "@/services/api";
 
 const AuthContext = createContext({});
 
+function decodeJwtPayload(token) {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const binary = window.atob(base64);
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+    const utf8 = new TextDecoder("utf-8").decode(bytes);
+
+    return JSON.parse(utf8);
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(() => {
         const token = Cookies.get("token");
@@ -34,14 +44,13 @@ export function AuthProvider({ children }) {
                 Cookies.set("token", token, { expires: 3 });
 
                 // 2. Vì JWT chứa thông tin user trong payload, ta giải mã cơ bản để lấy thông tin hiển thị UI
-                const base64Url = token.split(".")[1];
-                const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-                const payload = JSON.parse(window.atob(base64));
+                const payload = decodeJwtPayload(token);
+                const payloadUser = payload.user || {};
 
                 const userData = {
-                    id: payload.user.id,
-                    name: payload.user.fullname,
-                    avatar: payload.user.avatar_url,
+                    id: payloadUser.id,
+                    name: payloadUser.fullname || payloadUser.username || payloadUser.name || "",
+                    avatar: payloadUser.avatar_url,
                     role: role,
                 };
 
