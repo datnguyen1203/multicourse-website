@@ -59,7 +59,7 @@ export default function LoginPage() {
                         <div className="space-y-1.5">
                             <div className="flex items-center justify-between">
                                 <label className="text-sm font-medium text-gray-700">Mật khẩu</label>
-                                <Link href="/forgot-password" className="text-xs text-green-600 hover:underline">
+                                <Link href="/forgot-password" className="text-xs text-orange-500 hover:underline">
                                     Quên mật khẩu?
                                 </Link>
                             </div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
                                 required
                             />
                         </div>
-                        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 mt-2" disabled={isSubmitting}>
+                        <Button type="submit" className="w-full bg-orange-400 hover:bg-orange-500 mt-2" disabled={isSubmitting}>
                             {isSubmitting ? "Đang xử lý..." : "Đăng nhập"}
                         </Button>
                     </form>
@@ -80,7 +80,7 @@ export default function LoginPage() {
                 <CardFooter className="flex justify-center border-t py-4 bg-slate-50/50 rounded-b-lg">
                     <p className="text-sm text-gray-600">
                         Chưa có tài khoản?{" "}
-                        <Link href="/register" className="font-semibold text-green-600 hover:underline">
+                        <Link href="/register" className="font-semibold text-orange-500 hover:underline">
                             Đăng ký ngay
                         </Link>
                     </p>

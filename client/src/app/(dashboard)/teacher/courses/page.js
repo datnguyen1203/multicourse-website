@@ -51,7 +51,7 @@ export default function TeacherCoursesPage() {
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Quản lý khóa học</h1>
                     <p className="text-sm text-gray-500">Nơi bạn thiết lập, chỉnh sửa và đăng tải nội dung giảng dạy</p>
                 </div>
-                <Button className="bg-green-600 hover:bg-green-700" asChild>
+                <Button className="bg-orange-400 hover:bg-orange-500" asChild>
                     <Link href="/teacher/courses/create">
                         <Plus className="mr-2 h-4 w-4" /> Tạo khóa học mới
                     </Link>
@@ -61,7 +61,7 @@ export default function TeacherCoursesPage() {
             {/* Danh sách khóa học */}
             {isLoading ? (
                 <div className="flex h-40 flex-col items-center justify-center space-y-2 text-gray-500">
-                    <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
                     <p className="text-sm">Đang tải danh sách khóa học...</p>
                 </div>
             ) : courses.length > 0 ? (
@@ -76,14 +76,14 @@ export default function TeacherCoursesPage() {
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center text-center p-12 border border-dashed rounded-xl bg-white space-y-4">
-                    <div className="p-4 bg-green-50 text-green-600 rounded-full">
+                    <div className="p-4 bg-orange-50 text-orange-500 rounded-full">
                         <BookOpen className="h-8 w-8" />
                     </div>
                     <div className="space-y-1">
                         <h3 className="font-semibold text-gray-950 text-base">Bạn chưa có khóa học nào</h3>
                         <p className="text-sm text-gray-500 max-w-sm">Hãy bắt đầu chia sẻ kiến thức của bạn bằng cách tạo khóa học trực tuyến đầu tiên ngay hôm nay.</p>
                     </div>
-                    <Button className="bg-green-600 hover:bg-green-700" asChild>
+                    <Button className="bg-orange-400 hover:bg-orange-500" asChild>
                         <Link href="/teacher/courses/create">Tạo khóa học ngay</Link>
                     </Button>
                 </div>

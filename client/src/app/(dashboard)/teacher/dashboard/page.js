@@ -9,7 +9,7 @@ export default function TeacherDashboard() {
     const { user } = useAuth();
     // Giả lập dữ liệu thống kê từ API của Teacher
     const stats = [
-        { title: "Tổng doanh thu", value: "15,400,000 đ", icon: DollarSign, textColor: "text-green-600", bgColor: "bg-green-50" },
+        { title: "Tổng doanh thu", value: "15,400,000 đ", icon: DollarSign, textColor: "text-orange-500", bgColor: "bg-orange-50" },
         { title: "Học viên đăng ký", value: "128 học viên", icon: Users, textColor: "text-blue-600", bgColor: "bg-blue-50" },
         { title: "Khóa học đang bật", value: "4 khóa", icon: BookOpen, textColor: "text-purple-600", bgColor: "bg-purple-50" },
     ];
@@ -25,7 +25,7 @@ export default function TeacherDashboard() {
                         Dưới đây là hiệu suất và thống kê tổng quan các khóa học của bạn.
                     </p>
                 </div>
-                <Button className="bg-green-600 hover:bg-green-700 w-full sm:w-auto" asChild>
+                <Button className="bg-orange-400 hover:bg-orange-500 w-full sm:w-auto" asChild>
                     <Link href="/teacher/courses">
                         <Plus className="mr-2 h-4 w-4" /> Tạo khóa học mới
                     </Link>

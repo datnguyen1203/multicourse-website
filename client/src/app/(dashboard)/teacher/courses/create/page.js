@@ -228,7 +228,7 @@ export default function CreateCoursePage() {
                         </div>
 
                         {/* Nút gửi form */}
-                        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 mt-4" disabled={isSubmitting}>
+                        <Button type="submit" className="w-full bg-orange-400 hover:bg-orange-500 mt-4" disabled={isSubmitting}>
                             {isSubmitting ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

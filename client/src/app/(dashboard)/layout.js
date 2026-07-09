@@ -37,9 +37,9 @@ export default function DashboardLayout({ children }) {
     const currentMenu = mounted ? (menuConfig[user?.role] || []) : [];
 
     const SidebarContent = () => (
-        <div className="flex h-full flex-col justify-between bg-emerald-800 backdrop-blur  text-white p-4">
+        <div className="flex h-full flex-col justify-between bg-orange-600 backdrop-blur  text-white p-4">
             <div className="space-y-6">
-                <div className="px-3 py-2 text-xl font-bold tracking-tight text-white border-b border-emerald-600 pb-4">
+                <div className="px-3 py-2 text-xl font-bold tracking-tight text-white border-b border-orange-400 pb-4">
                     MultiCourse Panel
                 </div>
 
@@ -52,7 +52,7 @@ export default function DashboardLayout({ children }) {
                             <Link key={item.href} href={item.href}
                             >
                                 <span className={`flex items-center space-x-3 px-3 my-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                                ${isActive ? "bg-green-400 text-emerald-900" : "text-white hover:bg-emerald-800 hover:text-white"
+                                ${isActive ? "bg-orange-200 text-orange-700" : "text-white hover:bg-orange-600 hover:text-white"
                                     }`}>
                                     <Icon className="h-4 w-4" />
                                     <span>{item.name}</span>
@@ -63,7 +63,7 @@ export default function DashboardLayout({ children }) {
                 </nav>
             </div>
             <Button variant="ghost" onClick={logout}
-                className="w-full justify-start text-emerald-400 hover:bg-emerald-800 hover:text-white text-sm font-medium">
+                className="w-full justify-start text-orange-200 hover:bg-orange-600 hover:text-white text-sm font-medium">
                 <LogOut className="mr-3 h-4 w-4 text-destructive text-white" />
                 Đăng xuất
             </Button>
@@ -82,14 +82,14 @@ export default function DashboardLayout({ children }) {
 
             <div className="flex flex-1 flex-col md:pl-64">
                 <header className="flex h-16 items-center justify-between border-b bg-white px-4 md:hidden">
-                    <span className="font-bold text-green-900">MultiCourse</span>
+                    <span className="font-bold text-orange-700">MultiCourse</span>
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button className="bg-emerald-900">
+                            <Button className="bg-orange-700">
                                 <Menu className="h-6 w-6" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" className="p-0 w-64 border-r-0 bg-emerald-900">
+                        <SheetContent side="left" className="p-0 w-64 border-r-0 bg-orange-700">
                             <SidebarContent />
                         </SheetContent>
                     </Sheet>

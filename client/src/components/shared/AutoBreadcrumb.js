@@ -31,7 +31,7 @@ export default function AutoBreadcrumb() {
                 {/* Homepage always first */}
                 <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                        <Link href="/" className="hover:text-green-900 transition-colors">
+                        <Link href="/" className="hover:text-orange-700 transition-colors">
                             <HomeIcon className="w-5 h-5" />
                         </Link>
                     </BreadcrumbLink>
@@ -55,7 +55,7 @@ export default function AutoBreadcrumb() {
                                     </BreadcrumbPage>
                                 ) : (
                                     <BreadcrumbLink asChild>
-                                        <Link href={href} className="font-semibold hover:text-green-600 text-lg text-gray-500 transition-colors capitalize">
+                                        <Link href={href} className="font-semibold hover:text-orange-500 text-lg text-gray-500 transition-colors capitalize">
                                             {label}
                                         </Link>
                                     </BreadcrumbLink>

@@ -187,7 +187,7 @@ export default function RegisterPage() {
 
                         {/* submit button */}
                         <Button type="submit" disabled={isSubmitting}
-                            className="w-full bg-green-600 hover:bg-green-700 mt-2">
+                            className="w-full bg-orange-400 hover:bg-orange-500 mt-2">
                             {isSubmitting ? "Đang xử lý tạo tài khoản..." : "Đăng ký ngay"}
                         </Button>
                     </form>
@@ -195,7 +195,7 @@ export default function RegisterPage() {
                 <CardFooter className="flex justify-center border-t py-4 bg-slate-50/50 rounded-b-lg">
                     <p className="text-sm text-gray-600">
                         Đã có tài khoản?{" "}
-                        <Link href="/login" className="font-semibold text-green-600 hover:underline">
+                        <Link href="/login" className="font-semibold text-orange-500 hover:underline">
                             Đăng nhập
                         </Link>
                     </p>

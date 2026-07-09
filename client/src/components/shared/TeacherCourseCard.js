@@ -10,7 +10,7 @@ export default function TeacherCourseCard({ course, onDelete }) {
     const { _id, title, description, price, image, status } = course;
     return (
         <Card className="p-0 group overflow-hidden border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:shadow-xl">
-            <div className={`absolute z-1 ml-3 mt-3 inline-flex items-center rounded-full ${status ? `bg-green-600` : "bg-gray-600"} px-3 py-1 text-xs font-semibold text-white shadow-sm backdrop-blur`}>
+            <div className={`absolute z-1 ml-3 mt-3 inline-flex items-center rounded-full ${status ? `bg-orange-500` : "bg-gray-600"} px-3 py-1 text-xs font-semibold text-white shadow-sm backdrop-blur`}>
                 <span>{status ? "Đang mở" : "Tạm ẩn"}</span>
             </div>
             <div className="flex flex-col overflow-hidden">
@@ -31,7 +31,7 @@ export default function TeacherCourseCard({ course, onDelete }) {
                             <h1 className="text-lg font-semibold leading-6 text-slate-900">
                                 {title}
                             </h1>
-                            <div className="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
+                            <div className="shrink-0 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">
                                 {price}
                             </div>
                         </div>
@@ -40,7 +40,7 @@ export default function TeacherCourseCard({ course, onDelete }) {
                         </p>
                     </div>
                     <div className="grid grid-cols-3 gap-2 pt-1">
-                        <Button asChild variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white">
+                        <Button asChild variant="outline" className="border-orange-200 bg-orange-50 text-orange-600 hover:bg-orange-500 hover:text-white">
                             <Link href="/teacher/courses" className="flex items-center justify-center gap-2">
                                 <Eye className="size-4" />
                                 <span>Xem</span>

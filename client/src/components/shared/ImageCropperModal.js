@@ -91,7 +91,7 @@ export default function ImageCropperModal({ open, setOpen, imageSrc, onCropCompl
 
                 <DialogFooter className="mt-4">
                     <Button variant="outline" onClick={() => setOpen(false)}>Hủy</Button>
-                    <Button className="bg-green-600 hover:bg-green-700" onClick={createCroppedImage}>Xác nhận cắt ảnh</Button>
+                    <Button className="bg-orange-400 hover:bg-orange-500" onClick={createCroppedImage}>Xác nhận cắt ảnh</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

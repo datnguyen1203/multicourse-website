@@ -31,19 +31,19 @@ export default function Home() {
   return (
     <div className="space-y-16 pb-16">
       {/*Section1: Wellcome banner */}
-      <section className="bg-gradient-to-r from-green-500 to-emerald-700 text-white py-20 px-4">
+      <section className="bg-gradient-to-r from-orange-400 to-orange-600 text-white py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center space-y-6">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Chinh Phục Kỹ Năng Mới <br /> Với Các Khóa Học Trực Tuyến Xuất Sắc
           </h1>
-          <p className="text-lg md:text-xl text-green-100 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-orange-100 max-w-2xl mx-auto">
             Học hỏi từ các chuyên gia hàng đầu, làm chủ kiến thức thực tế với lộ trình bài bản và hệ thống bài tập phong phú.
           </p>
           <div className="flex justify-center space-x-4 pt-4">
-            <Button size="lg" className="bg-white text-green-700 hover:bg-green-50 font-semibold" asChild>
+            <Button size="lg" className="bg-white text-orange-600 hover:bg-orange-50 font-semibold" asChild>
               <Link href="/">Khám phá ngay</Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-green-700 font-semibold hover:bg-white/10 hover:text-white" asChild>
+            <Button size="lg" variant="outline" className="border-white text-orange-600 font-semibold hover:bg-white/10 hover:text-white" asChild>
               <Link href="/">Giảng dạy tại MultiCourse</Link>
             </Button>
           </div>
