@@ -5,6 +5,9 @@ const CourseController = require('../controllers/courseController');
 const express = require('express');
 const router = express.Router();
 
+// Get top 3 courses (no authentication required)
+router.get('/top3', CourseController.getTop3Courses);
+
 // Get active courses (no authentication required)
 router.get('/active', CourseController.getActiveCourses);
 

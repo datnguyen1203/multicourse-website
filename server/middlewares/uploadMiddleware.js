@@ -47,6 +47,7 @@ const uploadCourseImage = multer({
     }
 });
 
+
 // Dynamic storage cho lesson với folder: courses/<course_title>/lesson/<lesson_number>
 const dynamicLessonStorage = new CloudinaryStorage({
     cloudinary: cloudinary,

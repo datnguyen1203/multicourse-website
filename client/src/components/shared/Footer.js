@@ -12,10 +12,10 @@ export default function Footer() {
                     <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Links</h4>
                     <ul className="space-y-2 text-sm">
                         <li>
-                            <Link href="/" className="hover:text-green-600">All courses</Link>
+                            <Link href="/" className="hover:text-orange-500">All courses</Link>
                         </li>
                         <li>
-                            <Link href="/" className="hover:text-green-600">Become a teacher</Link>
+                            <Link href="/" className="hover:text-orange-500">Become a teacher</Link>
                         </li>
                     </ul>
                 </div>
@@ -23,10 +23,10 @@ export default function Footer() {
                     <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Support</h4>
                     <ul className="space-y-2 text-sm">
                         <li>
-                            <Link href="/" className="hover:text-green-600">Support center</Link>
+                            <Link href="/" className="hover:text-orange-500">Support center</Link>
                         </li>
                         <li>
-                            <Link href="/" className="hover:text-green-600">Private policy</Link>
+                            <Link href="/" className="hover:text-orange-500">Private policy</Link>
                         </li>
                     </ul>
                 </div>
