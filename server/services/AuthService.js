@@ -43,7 +43,7 @@ class AuthService {
             { expiresIn: '3d' }
         );
 
-        return { success: true, token };
+        return { success: true, role: user.role, token };
     }
 
 }
