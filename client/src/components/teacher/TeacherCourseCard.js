@@ -66,7 +66,10 @@ export default function TeacherCourseCard({ course, onDelete, onUpdateSuccess })
                 <div className="flex flex-1 flex-col gap-4 p-5">
                     <div className="space-y-2">
                         <div className="flex items-start justify-between gap-3">
-                            <h1 className="text-lg font-semibold leading-6 text-slate-900">
+                            <h1
+                                className="text-base font-bold leading-6 text-slate-950 line-clamp-2 h-[48px] flex-1 items-start"
+                                title={title}
+                            >
                                 {title}
                             </h1>
                             <div className="shrink-0 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600 sm:text-sm">
