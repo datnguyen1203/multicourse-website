@@ -112,8 +112,8 @@ module.exports = {
             // Update course with new image URL
             const updatedCourse = await Courses.findByIdAndUpdate(
                 courseId,
-                { image_url: fileUrl },
-                { new: true }
+                { image: fileUrl },
+                { returnDocument: 'after' }
             );
 
             return updatedCourse;

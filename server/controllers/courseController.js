@@ -93,8 +93,13 @@ const courseController = {
     async changeCourseStatus(req, res) {
         try {
             const courseId = req.params.id;
-            const { status } = req.body;
-            const updatedCourse = await CourseService.changeCourseStatus(courseId, status);
+            const existsCourse = await CourseService.getCourseById(courseId);
+            if (!existsCourse) {
+                res.status(404).json({ error: 'Course not found' });
+            }
+
+
+            const updatedCourse = await CourseService.changeCourseStatus(courseId, !existsCourse.status);
             if (updatedCourse) {
                 res.status(200).json(updatedCourse);
             }

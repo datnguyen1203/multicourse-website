@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, BookOpen, Loader2 } from "lucide-react";
-import TeacherCourseCard from "@/components/shared/TeacherCourseCard";
+import TeacherCourseCard from "@/components/teacher/TeacherCourseCard";
 import { courseService } from "@/services/courseService";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -71,6 +71,7 @@ export default function TeacherCoursesPage() {
                             key={course._id}
                             course={course}
                             onDelete={handleDeleteCourse}
+                            onUpdateSuccess={fetchTeacherCourses}
                         />
                     ))}
                 </div>
