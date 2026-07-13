@@ -1,14 +1,26 @@
 var express = require('express');
+const cors = require('cors');
 const authRouter = require('./routes/authRouter');
 const userRouter = require('./routes/userRouter');
 const courseRouter = require('./routes/courseRouter');
 const lessonRouter = require('./routes/lessonRouter');
+const categoryRouter = require('./routes/categoryRouter');
 
 var app = express();
 
 const dbConfig = require("./configs/db_config");
 
 app.connect = dbConfig;
+app.use(cors({
+    origin: (origin, callback) => {
+        const allowedOrigin = process.env.CLIENT_ORIGIN;
+        if (!origin || (allowedOrigin && origin === allowedOrigin) || /^http:\/\/localhost:\d+$/.test(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -19,6 +31,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/lessons', lessonRouter);
+app.use('/api/categories', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
