@@ -6,7 +6,7 @@ module.exports = {
     // Get all lessons of a course
     async getLessonsByCourse(courseId) {
         try {
-            const lessons = await Lessons.find({ course: courseId });
+            const lessons = await Lessons.find({ course_id: courseId });
             return lessons;
         } catch (error) {
             throw new Error('Error fetching lessons for the course: ' + error.message);

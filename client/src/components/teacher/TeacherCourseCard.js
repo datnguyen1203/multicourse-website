@@ -97,7 +97,7 @@ export default function TeacherCourseCard({ course, onDelete, onUpdateSuccess })
                         </Button>
                         <Button
                             variant="outline"
-                            className={`flex items-center justify-center gap-2 ${status
+                            className={`cursor-pointer flex items-center justify-center gap-2 ${status
                                 ? "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-600 hover:text-white"
                                 : "border-green-200 bg-green-50 text-green-700 hover:bg-green-600 hover:text-white"
                                 }`}

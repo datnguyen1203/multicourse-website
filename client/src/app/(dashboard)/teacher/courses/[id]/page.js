@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { toast } from "sonner";
-import { BookOpen, Calendar, Edit, Trash2, Plus, PlayCircle, Loader2, ArrowLeft, Eye, Camera, EyeOff } from "lucide-react";
+import { BookOpen, Calendar, Edit, Trash2, Plus, PlayCircle, Loader2, ArrowLeft, Eye, Camera, EyeOff, FileText, Video } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import ImageCropperModal from "@/components/shared/ImageCropperModal";
 import UpdateCourseModal from "@/components/teacher/UpdateCourseModal";
+import { lessonService } from "@/services/lessonService";
 
 export default function TeacherCourseDetailPage({ params }) {
     const { id } = use(params);
@@ -20,6 +21,7 @@ export default function TeacherCourseDetailPage({ params }) {
     const { user } = useAuth();
 
     const [course, setCourse] = useState(null);
+    const [lessons, setLessons] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isTogglingStatus, setIsTogglingStatus] = useState(false);
 
@@ -41,6 +43,19 @@ export default function TeacherCourseDetailPage({ params }) {
         }
     }, [id]);
 
+    const fetchLessonsList = async () => {
+        try {
+            const data = await lessonService.getLessonsByCourseId(id);
+            if (Array.isArray(data)) {
+                // Sắp xếp các bài học tăng dần theo số thứ tự (number)
+                const sortedLessons = data.sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
+                setLessons(sortedLessons);
+            }
+        } catch (error) {
+            console.error("Không thể tải danh sách bài học:", error);
+        }
+    };
+
     useEffect(() => {
         if (user && user.role !== "teacher") {
             toast.error("Bạn không có quyền truy cập vào khu vực quản trị này!");
@@ -49,12 +64,13 @@ export default function TeacherCourseDetailPage({ params }) {
     }, [user, router]);
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            void fetchDetail();
-        }, 0);
-
-        return () => clearTimeout(timeoutId);
-    }, [fetchDetail]);
+        const loadAllData = async () => {
+            setIsLoading(true);
+            await Promise.all([fetchDetail(), fetchLessonsList()]);
+            setIsLoading(false);
+        };
+        loadAllData();
+    }, [id]);
 
     // Xử lý khi giáo viên click chọn file ảnh từ máy tính
     const handleImageChange = (e) => {
@@ -194,39 +210,66 @@ export default function TeacherCourseDetailPage({ params }) {
                             </div>
                         </CardContent>
                     </Card>
+                    <div className="space-y-4 pt-4 border-t">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-xl font-bold text-gray-900 tracking-tight">Cấu trúc bài giảng hiện tại</h2>
+                            <span className="text-xs text-gray-500 font-medium bg-slate-100 px-2.5 py-1 rounded-full border">
+                                Tổng số: {lessons.length} bài
+                            </span>
+                        </div>
 
-                    <Card className="border-slate-200">
-                        <CardContent className="space-y-4 p-5 sm:p-6">
-                            <div className="flex items-center justify-between gap-3">
-                                <h2 className="text-lg font-semibold tracking-tight text-slate-900 sm:text-xl">Cấu trúc bài giảng</h2>
-                                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
-                                    {lessonsCount} bài
-                                </span>
-                            </div>
-
-                            {lessonsCount > 0 ? (
-                                <Accordion type="single" collapsible className="w-full rounded-lg border bg-white px-4">
-                                    {course.lessons.map((lesson, idx) => (
-                                        <AccordionItem key={lesson._id || idx} value={`item-${idx}`} className="border-b last:border-0">
-                                            <AccordionTrigger className="py-3 text-left text-sm font-medium text-slate-800 hover:no-underline">
-                                                <span className="flex items-center">
-                                                    <PlayCircle className="mr-3 h-4 w-4 shrink-0 text-orange-500" />
-                                                    <span className="line-clamp-1">Bài {idx + 1}: {lesson.title}</span>
+                        {lessons.length > 0 ? (
+                            <Accordion type="single" collapsible className="w-full bg-white border rounded-xl px-4 shadow-sm">
+                                {lessons.map((lesson, idx) => (
+                                    <AccordionItem key={lesson._id || idx} value={`item-${idx}`} className="border-b last:border-0 py-1">
+                                        <AccordionTrigger className="hover:no-underline font-medium text-gray-800 text-sm py-3.5">
+                                            <div className="flex items-center justify-between w-full pr-4">
+                                                <span className="flex items-center text-left">
+                                                    <PlayCircle className="mr-3 h-4 w-4 text-blue-500 flex-shrink-0" />
+                                                    Bài {lesson.number || idx + 1}: {lesson.title}
                                                 </span>
-                                            </AccordionTrigger>
-                                            <AccordionContent className="pb-3 pl-7 text-xs leading-relaxed text-slate-500 sm:text-sm">
-                                                {lesson.description || "Chưa có mô tả chi tiết cho bài giảng này."}
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    ))}
-                                </Accordion>
-                            ) : (
-                                <div className="rounded-lg border border-dashed p-8 text-center text-sm text-slate-500">
-                                    Khóa học này chưa có nội dung bài giảng. Hãy bấm nút &quot;Thêm bài giảng mới&quot; để bắt đầu xây dựng đề cương.
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
+                                                {/* Badge trạng thái của bài học */}
+                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${lesson.status ? "bg-green-50 text-green-700 border border-green-100" : "bg-slate-50 text-slate-500 border border-slate-100"}`}>
+                                                    {lesson.status ? "Kích hoạt" : "Bản nháp"}
+                                                </span>
+                                            </div>
+                                        </AccordionTrigger>
+                                        <AccordionContent className="text-gray-500 pl-7 pb-4 text-xs space-y-3 leading-relaxed">
+                                            <p>{lesson.description || "Chưa có mô tả chi tiết cho bài giảng này."}</p>
+
+                                            {/* Các nút xem tài liệu học đính kèm (video, document) */}
+                                            <div className="flex flex-wrap items-center gap-2 pt-1">
+                                                {lesson.video_url && (
+                                                    <a
+                                                        href={lesson.video_url}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 transition-colors"
+                                                    >
+                                                        <Video className="h-3 w-3" /> Xem Video bài học
+                                                    </a>
+                                                )}
+                                                {lesson.document_url && (
+                                                    <a
+                                                        href={lesson.document_url}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-green-50 text-green-700 border border-green-100 hover:bg-green-100 transition-colors"
+                                                    >
+                                                        <FileText className="h-3 w-3" /> Tải tài liệu đính kèm
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        ) : (
+                            <div className="p-8 border border-dashed rounded-xl bg-white text-center text-sm text-gray-500">
+                                Khóa học này chưa có nội dung bài giảng. Hãy bấm nút "Thêm bài giảng" để bắt đầu xây dựng giáo trình.
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div className="xl:sticky xl:top-24 xl:h-fit">
@@ -306,7 +349,7 @@ export default function TeacherCourseDetailPage({ params }) {
                             >
                                 <Button
                                     variant="outline"
-                                    className="w-full justify-start text-blue-600 hover:text-blue-700 hover:bg-blue-50 bg-white"
+                                    className="cursor-pointer    w-full justify-start text-blue-600 hover:text-blue-700 hover:bg-blue-50 bg-white"
                                     onClick={() => setUpdateModalOpen(true)}
                                 >
                                     <Edit className="mr-2 h-4 w-4" /> Chỉnh sửa thông tin
@@ -315,7 +358,7 @@ export default function TeacherCourseDetailPage({ params }) {
 
                             <Button
                                 variant="outline"
-                                className={`w-full justify-start bg-white border ${course.status
+                                className={`cursor-pointer w-full justify-start bg-white border ${course.status
                                     ? "text-slate-700 hover:bg-slate-600 hover:text-white border-slate-200"
                                     : "text-green-700 hover:bg-green-600 hover:text-white border-green-200"
                                     }`}
@@ -335,6 +378,8 @@ export default function TeacherCourseDetailPage({ params }) {
                     </Card>
                 </div>
             </div>
+
+
             <ImageCropperModal
                 open={cropperOpen}
                 setOpen={setCropperOpen}
