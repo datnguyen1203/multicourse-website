@@ -24,5 +24,15 @@ export const lessonService = {
             console.error("Error fetching lessons:", error);
             return [];
         }
-    }
+    },
+
+    getLessonById: async (lessonId) => {
+        try {
+            const response = await api.get(`/lessons/${lessonId}`);
+            return response.data; // Giả định trả về object lesson chi tiết
+        } catch (error) {
+            console.error("Error fetching lesson detail:", error);
+            return null;
+        }
+    },
 };

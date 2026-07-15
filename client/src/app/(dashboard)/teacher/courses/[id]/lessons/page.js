@@ -10,13 +10,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { ArrowLeft, Plus, PlayCircle, Loader2, ListOrdered, Video, FileText } from "lucide-react";
+import Link from "next/link";
 
 export default function ManageLessonsPage({ params }) {
     const { id: courseId } = use(params);
     const router = useRouter();
 
     const [course, setCourse] = useState(null);
-    const [lessons, setLessons] = useState([]); // 🛠️ State riêng để lưu danh sách bài học từ API mới
+    const [lessons, setLessons] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,7 +28,6 @@ export default function ManageLessonsPage({ params }) {
     const [videoFile, setVideoFile] = useState(null);
     const [documentFile, setDocumentFile] = useState(null);
 
-    // 🛠️ Hàm tải danh sách bài học từ API chuyên biệt mới
     const fetchLessonsList = async () => {
         const lessonsData = await lessonService.getLessonsByCourseId(courseId);
         if (Array.isArray(lessonsData)) {
@@ -92,7 +92,6 @@ export default function ManageLessonsPage({ params }) {
             document.getElementById("video-input").value = "";
             document.getElementById("document-input").value = "";
 
-            // 🛠️ Tải lại danh sách bài học mới tinh từ API
             await fetchLessonsList();
         } else {
             toast.error(result.message || "Tạo bài học thất bại!");
@@ -121,8 +120,6 @@ export default function ManageLessonsPage({ params }) {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
-
-                {/* CỘT TRÁI (2/5): FORM TẠO BÀI HỌC */}
                 <div className="lg:col-span-2">
                     <Card className="shadow-sm bg-white">
                         <CardHeader>
@@ -213,7 +210,6 @@ export default function ManageLessonsPage({ params }) {
                     </Card>
                 </div>
 
-                {/* CỘT PHẢI (3/5): HIỂN THỊ DANH SÁCH BÀI HỌC THỰC TẾ TỪ API MỚI */}
                 <div className="lg:col-span-3 space-y-4">
                     <div className="flex items-center space-x-2 text-gray-900 font-bold text-lg px-1">
                         <ListOrdered className="h-5 w-5 text-orange-600" />
@@ -231,20 +227,26 @@ export default function ManageLessonsPage({ params }) {
                                                 <PlayCircle className="h-5 w-5 text-orange-500 mt-0.5 flex-shrink-0" />
                                                 <div className="space-y-1 min-w-0 w-full">
                                                     <div className="flex items-center justify-between">
-                                                        <h3 className="font-semibold text-gray-900 text-sm">
-                                                            Bài {lesson.number}: {lesson.title}
-                                                        </h3>
-                                                        {/* Badge trạng thái bài học */}
-                                                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${lesson.status ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}>
-                                                            {lesson.status ? "Kích hoạt" : "Bản nháp"}
-                                                        </span>
+                                                        <div className="flex items-center justify-between gap-4">
+                                                            <h3 className="font-semibold text-gray-900 text-sm">
+                                                                Bài {lesson.number}: {lesson.title}
+                                                            </h3>
+                                                            {/* Badge trạng thái bài học */}
+                                                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${lesson.status ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}>
+                                                                {lesson.status ? "Kích hoạt" : "Bản nháp"}
+                                                            </span>
+                                                        </div>
+                                                        <Button asChild variant="ghost" size="sm" className="h-7 text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 shrink-0">
+                                                            <Link href={`/teacher/courses/${courseId}/lessons/${lesson._id}`}>
+                                                                Xem chi tiết →
+                                                            </Link>
+                                                        </Button>
                                                     </div>
 
                                                     <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">
                                                         {lesson.description}
                                                     </p>
 
-                                                    {/* 🛠️ CẬP NHẬT: Hiển thị liên kết Video & Tài liệu chuẩn theo Cloudinary response */}
                                                     <div className="flex flex-wrap items-center gap-2 pt-2">
                                                         {lesson.video_url && (
                                                             <a

@@ -236,29 +236,35 @@ export default function TeacherCourseDetailPage({ params }) {
                                         </AccordionTrigger>
                                         <AccordionContent className="text-gray-500 pl-7 pb-4 text-xs space-y-3 leading-relaxed">
                                             <p>{lesson.description || "Chưa có mô tả chi tiết cho bài giảng này."}</p>
-
                                             {/* Các nút xem tài liệu học đính kèm (video, document) */}
-                                            <div className="flex flex-wrap items-center gap-2 pt-1">
-                                                {lesson.video_url && (
-                                                    <a
-                                                        href={lesson.video_url}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 transition-colors"
-                                                    >
-                                                        <Video className="h-3 w-3" /> Xem Video bài học
-                                                    </a>
-                                                )}
-                                                {lesson.document_url && (
-                                                    <a
-                                                        href={lesson.document_url}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-green-50 text-green-700 border border-green-100 hover:bg-green-100 transition-colors"
-                                                    >
-                                                        <FileText className="h-3 w-3" /> Tải tài liệu đính kèm
-                                                    </a>
-                                                )}
+                                            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 mt-2">
+                                                <div className="flex flex-wrap items-center gap-2 pt-1">
+                                                    {lesson.video_url && (
+                                                        <a
+                                                            href={lesson.video_url}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 transition-colors"
+                                                        >
+                                                            <Video className="h-3 w-3" /> Xem Video bài học
+                                                        </a>
+                                                    )}
+                                                    {lesson.document_url && (
+                                                        <a
+                                                            href={lesson.document_url}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-green-50 text-green-700 border border-green-100 hover:bg-green-100 transition-colors"
+                                                        >
+                                                            <FileText className="h-3 w-3" /> Tải tài liệu đính kèm
+                                                        </a>
+                                                    )}
+                                                </div>
+                                                <Button asChild size="sm" variant="outline" className="h-7 text-[11px] font-medium border-orange-200 text-orange-600 hover:bg-orange-600 hover:text-white transition-all">
+                                                    <Link href={`/teacher/courses/${id}/lessons/${lesson._id}`} className="no-underline">
+                                                        Quản lý bài học này →
+                                                    </Link>
+                                                </Button>
                                             </div>
                                         </AccordionContent>
                                     </AccordionItem>
